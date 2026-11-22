@@ -5,7 +5,7 @@ description: Używaj, gdy pracujesz w repozytorium projektu, które ma plik `.cl
 
 # detailed: dokładny zapis każdego kroku pracy projektowej
 
-Wersja 0.3.0, alfa (22.11.2026).
+Wersja 0.3.1, alfa (22.11.2026).
 
 **Zasada.** Nic, co ustalono, zmieniono albo wysłano, nie zostaje tylko w czacie. Każdy krok zostawia ślad w trzech rodzajach zapisu:
 
@@ -140,4 +140,4 @@ Gdy repo ma hook przypomnień, jego punkty podaj w 1–3 liniach na początku od
 
 ## Rozwój standardu
 
-Ten skill ma jedno źródło: własne repozytorium. Kopii w projekcie nie poprawiasz na miejscu. Gdy reguły brakuje, reguła się nie sprawdza albo zasady repo różnią się od skilla, wpisz to w pole „Do standardu” raportu kroku w postaci ogólnej (jak brzmiałaby w innym projekcie), bez nazw klienta, systemów i osób.
+Ten skill ma jedno źródło: gałąź domyślną własnego repozytorium. Kopia w projekcie pochodzi z tej gałęzi i nie poprawiasz jej na miejscu. Gdy reguły brakuje, reguła się nie sprawdza albo zasady repo różnią się od skilla, wpisz to w pole „Do standardu” raportu kroku w postaci ogólnej (jak brzmiałaby w innym projekcie), bez nazw klienta, systemów i osób.

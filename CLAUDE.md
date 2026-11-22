@@ -44,5 +44,5 @@ Przy każdej takiej uwadze:
 
 - Stosuj tu pętlę kroku ze skilla: przed zmianą przeczytaj otwarte wiersze `rejestr.md` dotyczące obszaru, po zmianie podaj raport kroku.
 - Język: dokumenty po polsku; kod, komentarze, identyfikatory i commity po angielsku.
-- Git: gałąź domyślna `main`. Commit i push na polecenie osoby prowadzącej sesję; zmiany po pierwszym commicie na gałęzi i przez PR, scala człowiek. Commit: tytuł w trybie rozkazującym, treść mówi dlaczego, bez atrybucji AI. Reguły gita dla projektów są jeszcze otwarte (STD-02, STD-03).
+- Git: `main` jest gałęzią domyślną i bazą każdej zmiany. Gałąź roboczą zakładasz z `origin/main` i do `main` ona wraca; nie budujesz zmiany na innej, niescalonej gałęzi. Commit, push i scalenie na polecenie osoby prowadzącej sesję. Klon, do którego prowadzi dowiązanie w katalogu skilli osoby, po pracy zostaje na `main`. Commit: tytuł w trybie rozkazującym, treść mówi dlaczego, bez atrybucji AI. Reguły gita dla projektów są jeszcze otwarte (STD-02, STD-03).
 - „Gotowe” wymaga wyniku `bash tests/selftest.sh` w odpowiedzi.

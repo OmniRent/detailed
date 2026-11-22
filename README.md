@@ -49,7 +49,7 @@ Standard powstaje w pracy nad projektami i wraca tutaj w postaci ogólnej.
 1. Obserwacja z projektu przychodzi z pola „Do standardu” raportu kroku: reguła zapisana tak, jak brzmiałaby w innym projekcie, bez nazw klienta, systemów i osób.
 2. Sprawa otwarta trafia do [rejestr.md](rejestr.md); przyjęta zmiana do skilla i do [log-zdarzen.md](log-zdarzen.md).
 3. Przed zapisaniem zmiany: `bash tests/selftest.sh` kończy się „ALL OK”.
-4. Zmiana zasad podnosi wersję w nagłówku `SKILL.md`. Kopie w projektach aktualizuje się stąd; kopii nie poprawia się na miejscu.
+4. Zmiana zasad podnosi wersję w nagłówku `SKILL.md`. Bazą każdej zmiany jest `main`; kopie w projektach robi się i aktualizuje z `main`, a kopii nie poprawia się na miejscu.
 
 ## Pochodzenie
 

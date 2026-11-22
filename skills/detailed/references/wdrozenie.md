@@ -56,7 +56,7 @@ Sprawdzenie: `bash .claude/skills/detailed/scripts/reminders.sh start` w katalog
 
 | Sposób | Kiedy | Uwaga |
 |---|---|---|
-| Kopia w `.claude/skills/detailed/` w repo projektu | zawsze, gdy z projektem pracują sesje w chmurze albo kilka osób | sesja w chmurze widzi tylko repo; kopię aktualizuje się z repozytorium standardu, nie poprawia na miejscu |
+| Kopia w `.claude/skills/detailed/` w repo projektu | zawsze, gdy z projektem pracują sesje w chmurze albo kilka osób | sesja w chmurze widzi tylko repo; kopię robi się i aktualizuje z gałęzi domyślnej repozytorium standardu, nigdy z gałęzi roboczej; nie poprawia się jej na miejscu |
 | Dowiązanie w katalogu skilli osoby do klonu repozytorium standardu | praca nad samym standardem | zmiany widać od razu we wszystkich projektach tej osoby |
 
 Hook można też podpiąć w ustawieniach osoby: w repo bez `.claude/detailed.conf` skrypt milczy.
