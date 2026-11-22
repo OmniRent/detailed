@@ -5,7 +5,7 @@ description: Używaj, gdy pracujesz w repozytorium projektu, które ma plik `.cl
 
 # detailed: dokładny zapis każdego kroku pracy projektowej
 
-Wersja 0.3.1, alfa (22.11.2026).
+Wersja 0.4.0, alfa (22.11.2026).
 
 **Zasada.** Nic, co ustalono, zmieniono albo wysłano, nie zostaje tylko w czacie. Każdy krok zostawia ślad w trzech rodzajach zapisu:
 
@@ -22,8 +22,8 @@ Wersja 0.3.1, alfa (22.11.2026).
 | Sytuacja | Co robisz |
 |---|---|
 | `/detailed <zadanie>` | Pełna pętla kroku dla tego zadania. |
-| `/detailed` bez zadania | Punkty 1–3 pętli. Potem stan w kilku liniach: kto prowadzi sesję, sprawy czekające na tę osobę, sprawy blokujące, pliki niezapisane w gicie. |
-| W sesji są już zmiany, ustalenia albo pytania bez zapisu | Najpierw nadrabiasz: punkty 9–11 dla wszystkiego, co zaszło od początku sesji. |
+| `/detailed` bez zadania | Kroki „Konfiguracja”, „Kto prowadzi sesję” i „Aktualny stan” z pętli. Potem stan w kilku liniach: kto prowadzi sesję, sprawy czekające na tę osobę, sprawy blokujące, pliki niezapisane w gicie. |
+| W sesji są już zmiany, ustalenia albo pytania bez zapisu | Najpierw nadrabiasz: kroki z części „Po kroku” dla wszystkiego, co zaszło od początku sesji. |
 | Repo nie ma `.claude/detailed.conf` | `references/wdrozenie.md`: proponujesz założenie zapisu. Do czasu wdrożenia pętla i raport kroku obowiązują; w polach raportu wpisujesz, co powinno powstać. |
 
 Po wywołaniu każdy następny krok sesji idzie pętlą, bez ponownego wywołania.
@@ -41,10 +41,10 @@ Krok to jedna logiczna zmiana: zadanie, analiza materiału, przygotowanie treśc
 
 ### W trakcie
 
-5. **Kwestia nierozstrzygnięta.** Nie rozstrzygaj jej. Dopisz wiersz w rejestrze („Czeka na”, „Od”, „Zakres”, założenie robocze), buduj na założeniu i oznacz je komentarzem z ID w kodzie albo w dokumencie.
+5. **Kwestia nierozstrzygnięta.** Nie rozstrzygaj jej. Dopisz wiersz w rejestrze (kolumny `col_waiting`, `col_since`, `col_scope`, `col_assumption`), buduj na założeniu i oznacz je komentarzem z ID w kodzie albo w dokumencie.
 6. **Fakt.** Oznacz, skąd pochodzi: `zmierzone`, `z dokumentacji`, `założenie`.
 7. **Treść dla klienta.** Przygotuj plik w skrzynce nadawczej (`client_outbox`). Nie wysyłaj.
-8. **Pytanie do osoby.** Pytanie, na którego odpowiedź sesja czeka, dopisz w tej samej zmianie jako wiersz rejestru („Czeka na” ta osoba) z rekomendacją w kolumnie „Założenie robocze” i podaj jego ID przy pytaniu. Odpowiedź, która przyjdzie w sesji, najpierw zapisz w wierszu (status i źródło), potem wykonaj.
+8. **Pytanie do osoby.** Pytanie, na którego odpowiedź sesja czeka, dopisz w tej samej zmianie jako wiersz rejestru („Czeka na” ta osoba) z rekomendacją w kolumnie założenia roboczego (`col_assumption`) i podaj jego ID przy pytaniu. Odpowiedź, która przyjdzie w sesji, najpierw zapisz w wierszu (status i źródło), potem wykonaj.
 
 ### Po kroku
 
@@ -112,7 +112,7 @@ Do standardu: nic
 
 ## Czerwone linie
 
-- Sprawy osoby decyzyjnej (`gate_role`) zamyka tylko jej commit. Sesja innej osoby wpisuje `propozycja`.
+- Sprawy osoby decyzyjnej (`gate_role`) zamyka tylko jej commit. Sesja innej osoby wpisuje status propozycji (`status_proposal`).
 - Nic nie wychodzi do klienta z sesji. Wysyła osoba z rolą `sender_role`.
 - Jeden rejestr. Bez osobnych list pytań, bez kopii decyzji w innych plikach, bez pliku per zmiana.
 - Log zdarzeń tylko dopisujemy. Wierszy rejestru nie usuwamy i nie przenumerowujemy.
@@ -136,7 +136,7 @@ Do standardu: nic
 
 ## Przypomnienia
 
-Gdy repo ma hook przypomnień, jego punkty podaj w 1–3 liniach na początku odpowiedzi (ID i czego dotyczy), potem rób zadanie; nie powtarzaj ich przy każdej odpowiedzi. Gdy hooka nie ma, zrób to sam na starcie sesji: sprawy czekające na osobę prowadzącą, sprawy stron zewnętrznych otwarte dłużej niż `external_overdue_days`, sprawy osoby decyzyjnej zamknięte bez jej commita, nieaktualny klon.
+Gdy repo ma hook przypomnień, jego punkty podaj na początku odpowiedzi w liczbie linii z `reminder_summary_lines` (ID i czego dotyczy), potem rób zadanie; nie powtarzaj ich przy każdej odpowiedzi. Gdy hooka nie ma, zrób to sam na starcie sesji: sprawy czekające na osobę prowadzącą, sprawy stron zewnętrznych otwarte dłużej niż `external_overdue_days`, sprawy osoby decyzyjnej zamknięte bez jej commita, nieaktualny klon.
 
 ## Rozwój standardu
 

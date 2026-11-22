@@ -16,8 +16,6 @@
 set -u
 
 MODE="${1:-prompt}"
-FETCH_MIN=10    # background fetch at most this often in "prompt" mode
-MAX_ROWS=8      # rows shown per list
 
 # Hooks receive JSON on stdin; drain it so the pipe is closed.
 [ -t 0 ] || cat >/dev/null 2>&1
@@ -54,6 +52,10 @@ GATE_ROLE="$(conf gate_role pm)"
 EXTERNAL="$(conf external_parties "")"
 OVERDUE_DAYS="$(int "$(conf external_overdue_days 7)" 7)"
 INTERVAL_MIN="$(int "${DETAILED_INTERVAL_MIN:-$(conf reminder_interval_min 60)}" 60)"
+FETCH_MIN="$(int "$(conf fetch_interval_min 10)" 10)"          # background fetch at most this often in "prompt" mode
+MAX_ROWS="$(int "$(conf reminder_max_rows 8)" 8)"              # rows shown per list
+SUBJECT_WORDS="$(int "$(conf reminder_subject_words 14)" 14)"  # words of the subject shown per row
+SUMMARY_LINES="$(conf reminder_summary_lines 1-3)"            # how many lines the session gives the reminders
 KNOWLEDGE_DIRS="$(conf knowledge_dirs docs | sed 's/[ ]*,[ ]*/,/g')"
 C_ID="$(conf col_id ID)"
 C_SUBJECT="$(conf col_subject Sprawa)"
@@ -149,13 +151,13 @@ if [ "$MODE" = "prompt" ] && [ "$CHANGED_BY_OTHER" -eq 0 ] && [ "$(since last_re
 fi
 
 # --- 5. Parse the register tables --------------------------------------------------------------------
-# Output: line<TAB>ID<TAB>subject (first 14 words)<TAB>waiting on<TAB>since<TAB>status
-ROWS="$(printf '%s\n' "$REG_TEXT" | awk -F'|' -v cid="$C_ID" -v csubj="$C_SUBJECT" -v cwait="$C_WAITING" -v csince="$C_SINCE" -v cstatus="$C_STATUS" '
+# Output: line<TAB>ID<TAB>subject (first SUBJECT_WORDS words)<TAB>waiting on<TAB>since<TAB>status
+ROWS="$(printf '%s\n' "$REG_TEXT" | awk -F'|' -v words="$SUBJECT_WORDS" -v cid="$C_ID" -v csubj="$C_SUBJECT" -v cwait="$C_WAITING" -v csince="$C_SINCE" -v cstatus="$C_STATUS" '
   function trim(s) { gsub(/^[ \t]+|[ \t]+$/, "", s); return s }
   function short(s,   n, w, i, out) {
     n = split(s, w, " "); out = ""
-    for (i = 1; i <= n && i <= 14; i++) out = out (i > 1 ? " " : "") w[i]
-    if (n > 14) out = out " …"
+    for (i = 1; i <= n && i <= words; i++) out = out (i > 1 ? " " : "") w[i]
+    if (n > words) out = out " …"
     return out
   }
   BEGIN { ns = split(csubj, subj, ","); for (i = 1; i <= ns; i++) subj[i] = trim(subj[i]) }
@@ -253,5 +255,5 @@ echo "$NOW" > "$STATE/last_reminder"
 
 echo "[Przypomnienia z rejestru projektu $PROJECT ($REG), osoba: ${PERSON:-nieznana}]"
 printf '%s' "$OUT"
-echo "Zacznij odpowiedź od tych punktów w 1-3 liniach, potem wykonaj zadanie."
+echo "Zacznij odpowiedź od tych punktów w $SUMMARY_LINES liniach, potem wykonaj zadanie."
 exit 0

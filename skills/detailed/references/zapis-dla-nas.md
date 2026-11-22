@@ -4,7 +4,9 @@ Zapis wewnętrzny czyta zespół i każda kolejna sesja, która nie ma pamięci 
 
 ## 1. Rejestr (`register`)
 
-Jedno miejsce na sprawy czekające na osobę decyzyjną, na klienta i na zespół, na testy, zmiany specyfikacji i różnice między specyfikacją a projektem graficznym.
+Jedno miejsce na sprawy czekające na osobę decyzyjną, na klienta i na zespół, na testy, zmiany specyfikacji i, gdy projekt ma katalog `design`, różnice między specyfikacją a projektem graficznym.
+
+Nazwy kolumn podaje konfiguracja (klucze `col_*`); niżej występują pod nazwami domyślnymi.
 
 | Kolumna | Znaczenie |
 |---|---|
@@ -12,18 +14,18 @@ Jedno miejsce na sprawy czekające na osobę decyzyjną, na klienta i na zespó�
 | Sprawa | Jedno zdanie: czego dotyczy i co trzeba ustalić |
 | Czeka na | Osoba z pliku osób albo strona zewnętrzna z `external_parties`. Tylko te wartości, bo po nich filtruje hook |
 | Od | Data otwarcia, `RRRR-MM-DD` |
-| Zakres | Wartości z `CLAUDE.md` repo (na przykład podstawa, pakiet kupiony, pakiet płatny, etap późniejszy, do oceny) |
+| Zakres | Wartości z `CLAUDE.md` repo |
 | Założenie robocze | Co robi kod albo dokument do czasu rozstrzygnięcia |
 | Następny krok | Jedna czynność i kto ją wykonuje |
 | Blokuje | Co stoi, dopóki sprawa jest otwarta |
-| Status | `otwarte` → `w toku` albo `propozycja` → `rozstrzygnięte DD.MM (kto)` |
-| Źródło potwierdzenia | Commit, PR, wiadomość, notatka ze spotkania. Bez źródła nie ma „rozstrzygnięte” |
+| Status | `status_open` → `status_in_progress` albo `status_proposal` → `status_closed` (wartości z konfiguracji) |
+| Źródło potwierdzenia | Commit, PR, wiadomość, notatka ze spotkania. Bez źródła nie ma statusu zamknięcia |
 
 Zasady wierszy:
 
 1. Jeden wiersz to jedna linia. Nowe wiersze na końcu sekcji. Bez znaku `|` w komórkach. Nie przeformatowuj całych tabel. Dzięki temu dwie sesje rzadko wchodzą sobie w drogę.
 2. Wierszy nie usuwamy. Rozstrzygnięty zostaje na miejscu, a decyzja dostaje wpis w logu zdarzeń.
-3. Sprawę osoby decyzyjnej zamyka tylko jej commit (`references/bramka-i-zakres.md`). W innej sesji wpisujesz `propozycja` z uzasadnieniem.
+3. Sprawę osoby decyzyjnej zamyka tylko jej commit (`references/bramka-i-zakres.md`). W innej sesji wpisujesz status propozycji (`status_proposal`) z uzasadnieniem.
 4. Założenie robocze oznacz w kodzie albo w dokumencie komentarzem z ID sprawy, żeby po decyzji dało się znaleźć wszystkie miejsca.
 5. Pytanie do klienta jest wierszem „Czeka na” klienta i pozycją w pliku do wysłania (`references/zapis-dla-klienta.md`). Kolumna „Następny krok” wskazuje ten plik.
 6. Pytanie zadane osobie w sesji, na które sesja czeka, jest wierszem „Czeka na” tę osobę, z rekomendacją w „Założenie robocze”. Pytanie zostawione tylko w czacie ginie między sesjami i nie trafia do przypomnień. Odpowiedź z sesji zapisujesz w wierszu, zanim ją wykonasz: status, a w „Źródło potwierdzenia” data i „odpowiedź w sesji”.
@@ -33,7 +35,7 @@ Zasady wierszy:
 | Zasada | Jak |
 |---|---|
 | Najpierw istniejący plik | Dopisz do dokumentu, który już opisuje temat. Nowy plik tylko dla nowego tematu i od razu z wpisem w mapie wiedzy |
-| Nazwa | Według reguły nazw z `CLAUDE.md` repo. Gdy jej nie ma: numer kolejny i 2–5 słów o treści; data w nazwie tylko dla migawki z jednego dnia (wyniki testów, ankieta) |
+| Nazwa | Według reguły nazw z `CLAUDE.md` repo. Gdy jej nie ma: numer kolejny i opis treści w `doc_name_words` słowach; data w nazwie tylko dla migawki z jednego dnia (wyniki testów, ankieta) |
 | Nagłówek | Tytuł z datą stanu. Pod nim: „Źródło:” (dokumentacja, pomiar, kod, decyzja) i dla kogo jest dokument. Dokument wewnętrzny mówi to wprost w pierwszej linii |
 | Fakty a założenia | Każdy fakt oznaczony: `zmierzone`, `z dokumentacji`, `założenie`. Dokumentacji zewnętrznego systemu nie przepisuj jako faktu, dopóki nie została potwierdzona pomiarem |
 | Forma | Tabele dla faktów, decyzji, porównań i list zadań. Zdania tam, gdzie potrzebna jest argumentacja |

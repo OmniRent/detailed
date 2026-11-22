@@ -17,25 +17,29 @@ W projekcie bez pliku osób zapytaj osobę prowadzącą sesję, kto pełni rolę
 | 7 | Hook przypomnień | `templates/settings-hooks.json` | `.claude/settings.json` |
 | 8 | Fakty w `CLAUDE.md` | lista w sekcji 3 | `CLAUDE.md` |
 
-Po zgodzie, w katalogu projektu (`SKILL` to katalog tego skilla; ścieżki docelowe dopasuj do kluczy konfiguracji):
+Po zgodzie, w katalogu projektu (`SKILL` to katalog tego skilla). Najpierw skopiuj konfigurację i wpisz w niej ścieżki projektu; resztę plików zakładasz pod ścieżkami z konfiguracji:
 
 ```bash
-mkdir -p .claude/skills docs/do-wyslania docs/wyslane
+mkdir -p .claude/skills
 cp -R "$SKILL" .claude/skills/detailed
 cp "$SKILL/templates/detailed.conf" .claude/detailed.conf
-cp "$SKILL/templates/osoby.tsv" .claude/osoby.tsv
-cp "$SKILL/templates/rejestr.md" docs/rejestr.md
-cp "$SKILL/templates/log-zdarzen.md" docs/log-zdarzen.md
+# tu: uzupełnij .claude/detailed.conf
+conf() { sed -n "s/^$1=//p" .claude/detailed.conf; }
+for k in register event_log people; do mkdir -p "$(dirname "$(conf $k)")"; done
+mkdir -p "$(conf client_outbox)" "$(conf client_sent)"
+cp "$SKILL/templates/osoby.tsv" "$(conf people)"
+cp "$SKILL/templates/rejestr.md" "$(conf register)"
+[ "$(conf event_log)" = "$(conf register)" ] || cp "$SKILL/templates/log-zdarzen.md" "$(conf event_log)"
 cp "$SKILL/templates/settings-hooks.json" .claude/settings.json   # gdy plik już istnieje: dopisz sekcję "hooks" ręcznie
 ```
 
-Potem uzupełnij wartości w `.claude/detailed.conf` i `.claude/osoby.tsv`, dopisz fakty do `CLAUDE.md` (sekcja 3) i pierwszy wpis `decyzja` w logu: kto i kiedy przyjął standard.
+Potem uzupełnij plik osób (`people`), dopisz fakty do `CLAUDE.md` (sekcja 3) i pierwszy wpis `decyzja` w logu: kto i kiedy przyjął standard.
 
 Sprawdzenie: `bash .claude/skills/detailed/scripts/reminders.sh start` w katalogu projektu wypisuje sprawy czekające na osobę z `git config` albo pyta, kto prowadzi sesję.
 
 ## 2. Projekt, który ma już swoje pliki
 
-1. Nie przenoś i nie przenumerowuj. Wpisz istniejące ścieżki do konfiguracji; nazwy kolumn rejestru podaj w kluczach `col_*`.
+1. Nie przenoś i nie przenumerowuj. Wpisz istniejące ścieżki do konfiguracji; nazwy kolumn rejestru podaj w kluczach `col_*`, statusy w kluczach `status_*`, limity cyklu realizacji w `plan_max_tasks`, `task_max_days`, `review_max_cycles`, `acceptance_max_cycles`.
 2. Gdy log jest podzielony (decyzje w jednym miejscu, scalone zmiany w innym), `event_log` wskazuje miejsce decyzji, a podział opisuje tabela „Zdarzenie → co aktualizować” w `CLAUDE.md`.
 3. Plik osób musi mieć kolumnę roli. Osoba z kilkoma adresami e-mail w gicie ma je wszystkie w kolumnie e-maili, po przecinku.
 4. Zasady procesu skopiowane wcześniej do `CLAUDE.md` zastąp odesłaniem do skilla. W `CLAUDE.md` zostają fakty.
@@ -45,7 +49,8 @@ Sprawdzenie: `bash .claude/skills/detailed/scripts/reminders.sh start` w katalog
 - Osoby i role; kto prowadzi który rodzaj sesji i gdzie jest opisany jego sposób pracy.
 - „Czytaj najpierw”: kolejność dokumentów.
 - Hierarchia dokumentów przy sprzeczności.
-- Zakres: wartości kolumny „Zakres”, co budujemy, czego nie.
+- Zakres: wartości kolumny zakresu, co budujemy, czego nie; format linii zakresu (szacunek, kwota, rekomendacje) i warunki zgłaszania bez pytania (`references/bramka-i-zakres.md`, sekcja 2).
+- Środowisko albo obiekty testowe systemów zewnętrznych; co porównać przy nowym eksporcie w katalogu `design`.
 - Prefiksy ID w rejestrze i reguła nazw plików wiedzy.
 - Tabela „Zdarzenie → co aktualizować” z konkretnymi plikami projektu.
 - Git: gałąź domyślna, co idzie przez PR, kto scala, kiedy sesja commituje i wypycha, zasada autorstwa commitów.
@@ -64,7 +69,7 @@ Hook można też podpiąć w ustawieniach osoby: w repo bez `.claude/detailed.co
 ## 5. Założenia i ograniczenia hooka
 
 - Czyta rejestr z gałęzi domyślnej na zdalnym repo; zmiany lokalne zobaczy po wypchnięciu.
-- Na starcie sesji wykonuje `git fetch`; przy wiadomościach najwyżej raz na 10 minut, w tle.
+- Na starcie sesji wykonuje `git fetch`; przy wiadomościach najwyżej raz na `fetch_interval_min` minut, w tle.
 - Wiersze rejestru trafiają do kontekstu sesji. Każdy, kto może zmienić rejestr na gałęzi domyślnej, wpływa więc na to, co sesja przeczyta na początku: prawo zapisu do tej gałęzi mają tylko osoby z pliku osób.
 - Osobę rozpoznaje po e-mailu z `git config`, potem po wzorcu nazwy. Zmienna `DETAILED_PERSON` wskazuje osobę bez pytania.
 - Bramka decyzyjna jest umową: hook zgłasza sprawy zamknięte cudzym commitem, niczego nie blokuje i nie cofa.

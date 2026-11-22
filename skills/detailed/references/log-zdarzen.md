@@ -41,7 +41,7 @@ Otwarcie sprawy nie jest zdarzeniem logu: zapisuje je wiersz rejestru z datą w 
 
 ## 4. Dłuższy wpis dla scalonej zmiany
 
-Gdy projekt prowadzi dziennik realizacji, wpis `zmiana` ma tam 3–6 linii w stałym kształcie:
+Gdy projekt prowadzi dziennik realizacji, wpis `zmiana` ma tam `changelog_entry_lines` linii w stałym kształcie:
 
 ```markdown
 ## <data> · PR #<n> · <ID zadania> <nazwa>

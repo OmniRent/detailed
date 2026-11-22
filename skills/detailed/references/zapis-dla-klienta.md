@@ -44,7 +44,7 @@ Przed oddaniem pliku przeczytaj część pod linią tak, jak przeczyta ją klien
 
 ## 4. Dokumenty z wersją (specyfikacja, oferta, zakres)
 
-- Wersja wysłana klientowi dostaje tag w gicie (`<dokument>-<wersja>-wyslana`) i kopię w archiwum wysłanych.
+- Wersja wysłana klientowi dostaje tag w gicie według `sent_tag_format` i kopię w archiwum wysłanych.
 - Archiwum wysłanych nie jest nadpisywane, także przez skrypty budujące dokumenty. Nowa wersja to nowy katalog z datą.
 - Nowa wersja zaczyna się sekcją „Zmiany w wersji X”.
 - Treść takich dokumentów zmienia tylko osoba decyzyjna. W innej sesji proponujesz zmianę w rejestrze, nie w tekście.
@@ -52,7 +52,7 @@ Przed oddaniem pliku przeczytaj część pod linią tak, jak przeczyta ją klien
 ## 5. Odpowiedź klienta
 
 1. Wpis `odpowiedź klienta` w logu zdarzeń: data, czego dotyczy, kto odpowiedział, źródło (wiadomość, notatka ze spotkania, komentarz).
-2. Wiersz rejestru: gdy odpowiedź zamyka sprawę, status ustawia osoba decyzyjna; w innej sesji wpisujesz `propozycja` ze źródłem.
+2. Wiersz rejestru: gdy odpowiedź zamyka sprawę, status ustawia osoba decyzyjna; w innej sesji wpisujesz status propozycji (`status_proposal`) ze źródłem.
 3. Ustalenie spoza repo (komunikator, telefon, spotkanie) nie obowiązuje, dopóki osoba decyzyjna nie zapisze go commitem.
 4. Odpowiedź, która zmienia zakres, koszt albo termin, jest nową sprawą dla osoby decyzyjnej, nie poleceniem do wykonania.
 

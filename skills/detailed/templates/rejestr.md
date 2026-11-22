@@ -8,8 +8,8 @@ Jedyny rejestr projektu. Zasady: skill `detailed`, `references/zapis-dla-nas.md`
 |---|---|
 | Czeka na | osoba z pliku osób albo strona zewnętrzna z konfiguracji (tylko te wartości) |
 | Od | data otwarcia, `RRRR-MM-DD` |
-| Status | `otwarte` · `w toku` · `propozycja` · `rozstrzygnięte DD.MM (kto)` |
-| Źródło potwierdzenia | commit, PR, wiadomość, notatka ze spotkania; bez źródła nie ma „rozstrzygnięte” |
+| Status | wartości `status_*` z konfiguracji (domyślnie: otwarte · w toku · propozycja · rozstrzygnięte DD.MM (kto)) |
+| Źródło potwierdzenia | commit, PR, wiadomość, notatka ze spotkania; bez źródła nie ma statusu zamknięcia |
 
 Jeden wiersz to jedna linia; nowe wiersze na końcu sekcji; bez znaku pionowej kreski w komórkach; wierszy nie usuwamy.
 
@@ -29,6 +29,8 @@ Jeden wiersz to jedna linia; nowe wiersze na końcu sekcji; bez znaku pionowej k
 |---|---|---|---|---|---|---|---|---|---|
 
 ## 4. Zmiany specyfikacji i różnice specyfikacja ↔ projekt graficzny
+
+Różnice z projektem graficznym tylko wtedy, gdy konfiguracja wskazuje katalog `design`; bez niego sekcja zbiera same zmiany specyfikacji.
 
 | ID | Sprawa | Czeka na | Od | Zakres | Założenie robocze | Następny krok | Blokuje | Status | Źródło potwierdzenia |
 |---|---|---|---|---|---|---|---|---|---|

@@ -22,9 +22,9 @@ Ramy pracy nad kodem i dokumentacją techniczną. Kto pełni którą rolę (czł
 4. **Granice ról.** Planista nie pisze kodu. Rola rozpisująca zadania nie zmienia zakresu i nie rozstrzyga spraw z rejestru. Wykonawca nie wychodzi poza kartę. Recenzent nie poprawia kodu w cudzym PR, poza literówkami i formatowaniem.
 5. **Bramki ludzkie.** Akceptacja planu, scalenie, każda decyzja z rejestru i każda zmiana zakresu.
 6. **Ryzyko decyduje o wykonawcy.** Zadania dotykające pieniędzy, danych osobowych, zapisów w systemach zewnętrznych, współbieżności i interfejsów między modułami dostaje mocniejszy wykonawca. W razie wątpliwości mocniejszy.
-7. **Systemy zewnętrzne.** Zapisy tylko na obiektach testowych i tylko w zadaniach, które to wprost przewidują. Sekrety, dane osobowe i surowe odpowiedzi systemów nie trafiają do PR, raportów ani logu.
+7. **Systemy zewnętrzne.** Zapisy tylko w środowisku albo na obiektach testowych wskazanych w `CLAUDE.md` repo i tylko w zadaniach, które to wprost przewidują. Sekrety, dane osobowe i surowe odpowiedzi systemów nie trafiają do PR, raportów ani logu.
 
-Limity domyślne (projekt może je zmienić w `CLAUDE.md`): plan najwyżej 15 zadań; karta najwyżej jeden ekran, zadanie najwyżej jeden dzień pracy; PR czytelny w jednej recenzji; najwyżej dwa cykle poprawek, trzeci to eskalacja do człowieka z opisem rozbieżności; odbiór etapu w jednym cyklu uwag, reszta jako zadania następnego etapu.
+Limity z konfiguracji: plan najwyżej `plan_max_tasks` zadań (większy etap dzielisz); zadanie najwyżej `task_max_days` dni pracy, karta mieści się na jednym ekranie; PR czytelny w jednej recenzji; najwyżej `review_max_cycles` cykli poprawek, następny to eskalacja do człowieka z opisem rozbieżności; odbiór etapu w `acceptance_max_cycles` cyklach uwag, reszta jako zadania następnego etapu.
 
 ## 3. Szablony
 
@@ -80,7 +80,7 @@ Poza kartą (zgłoszone, niezrobione): <co i dlaczego wykracza>
 Recenzja:
 
 ```markdown
-Werdykt: akceptuję | poprawki (cykl 1/2) | eskalacja
+Werdykt: akceptuję | poprawki (cykl <n>/<review_max_cycles>) | eskalacja
 Sprawdzone: <testy uruchomione i wynik; diff przeczytany w całości; zgodność z kartą i dokumentami>
 Uwagi: <plik:linia — problem — oczekiwana zmiana>
 Zakres: zgodny | wykracza (<ID>)

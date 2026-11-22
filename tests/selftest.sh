@@ -27,10 +27,19 @@ for ref in $(grep -rhoE '`(references|templates|scripts)/[A-Za-z0-9._/-]+`' "$SK
   [ -e "$SKILL_DIR/$ref" ] || missing="$missing $ref"
 done
 [ -z "$missing" ] && ok "every file referenced in the skill exists" || fail "referenced files missing:$missing"
-for key in $(grep -rhoE '`(register|people|gate_role|sender_role|client_outbox|client_sent|event_log|knowledge_map|knowledge_dirs|state|external_parties|external_overdue_days)`' "$SKILL_DIR" --include='*.md' | tr -d '`' | sort -u); do
+# Config keys named in the skill text: every snake_case token in backticks, plus the one-word keys.
+for key in $(grep -rhoE '`([a-z]+(_[a-z]+)+|register|people|state|design)`' "$SKILL_DIR" --include='*.md' | tr -d '`' | sort -u); do
   grep -q "^$key=" "$SKILL_DIR/templates/detailed.conf" || missing="$missing $key"
 done
 [ -z "$missing" ] && ok "every config key named in the skill is in the config template" || fail "config keys missing from the template:$missing"
+
+# --- 1c. No magic numbers: limits live in the config, not in the skill text or the hook ---------------
+# A number next to a unit of time, count or length is a limit; it belongs in templates/detailed.conf.
+# Example rows (dated 20xx-) in the references are fictional and skipped.
+hits="$(grep -rnE '[0-9]+ ?(minut|min|dni|dzień|dnia|godzin|zadań|cykl|cykli|cykle|linii|liniach|słów|wierszy)([^a-ząćęłńóśźż]|$)' "$SKILL_DIR" --include='*.md' | grep -vE '\| 20[0-9]{2}-[0-9]{2}-[0-9]{2} \|' || true)"
+if [ -z "$hits" ]; then ok "skill text has no hard-coded limits"; else fail "hard-coded limits in the skill text"; printf '%s\n' "$hits" | sed 's/^/       | /'; fi
+hits="$(grep -nE '^[A-Z_]+=([2-9]|[0-9]{2,})' "$HOOK" || true)"  # 0/1 are flags, not settings
+if [ -z "$hits" ]; then ok "hook has no hard-coded settings"; else fail "hard-coded settings in the hook"; printf '%s\n' "$hits" | sed 's/^/       | /'; fi
 
 # --- 2. Hook behaviour on a throwaway repo ------------------------------------------------------------
 TMP="$(mktemp -d)"
@@ -58,6 +67,8 @@ col_waiting=Waiting on
 col_since=Since
 col_status=State
 status_closed_prefix=closed
+reminder_subject_words=3
+reminder_summary_lines=2
 EOF
 printf 'person\trole\temails\tname_pattern\nLena\tlead\tlena@example.com\t-\nDan\tdev\tdan@example.com,dan.alt@example.com\t-\n' > .claude/people.tsv
 cat > notes/register.md <<'EOF'
@@ -97,6 +108,8 @@ has "(lead: Lena): 1 spraw" "$out" "open rows waiting on the gate role counted"
 has "A-03 —" "$out" "gate flags a row closed by someone outside the gate role"
 lacks "Strony zewnętrzne" "$out" "overdue external parties hidden from a non-gate person"
 has "[Przypomnienia z rejestru projektu Sample (notes/register.md)" "$out" "header built from the config"
+has "A-01 · first open matter …" "$out" "subject cut after reminder_subject_words words"
+has "w 2 liniach" "$out" "summary length taken from reminder_summary_lines"
 
 out="$(run prompt)"
 [ -z "$out" ] && ok "prompt mode is silent within the interval" || fail "prompt mode spoke within the interval"
