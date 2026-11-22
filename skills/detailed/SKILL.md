@@ -1,11 +1,11 @@
 ---
 name: detailed
-description: Używaj, gdy pracujesz w repozytorium projektu dla klienta, które ma plik `.claude/detailed.conf`, albo gdy osoba wpisze /detailed - przed rozpoczęciem zadania, gdy pojawia się pytanie, decyzja, wątpliwość co do zakresu albo treść dla klienta, po każdej zmianie, którą trzeba zapisać, i na końcu sesji. Także gdy trzeba założyć taki zapis w nowym projekcie. Hasła - rejestr pytań i decyzji, log zdarzeń, bramka decyzyjna, treść do wysłania klientowi, dokumentowanie kroku.
+description: Używaj, gdy pracujesz w repozytorium projektu, które ma plik `.claude/detailed.conf`, albo gdy osoba wpisze /detailed - przed rozpoczęciem zadania, gdy pojawia się pytanie, decyzja, wątpliwość co do zakresu albo treść dla klienta, po każdej zmianie, którą trzeba zapisać, i na końcu sesji. Także gdy trzeba założyć taki zapis w nowym projekcie. Hasła - rejestr pytań i decyzji, log zdarzeń, bramka decyzyjna, treść do wysłania klientowi, dokumentowanie kroku.
 ---
 
 # detailed: dokładny zapis każdego kroku pracy projektowej
 
-Wersja 0.2.0, alfa (22.11.2026).
+Wersja 0.3.0, alfa (22.11.2026).
 
 **Zasada.** Nic, co ustalono, zmieniono albo wysłano, nie zostaje tylko w czacie. Każdy krok zostawia ślad w trzech rodzajach zapisu:
 
@@ -15,15 +15,26 @@ Wersja 0.2.0, alfa (22.11.2026).
 | **Dla klienta** | klient, przez osobę wysyłającą | treść przygotowana do wysłania i archiwum tego, co wysłano | `references/zapis-dla-klienta.md` |
 | **Log zdarzeń** | każdy, kto pyta „od kiedy i skąd to wiemy” | decyzje, odpowiedzi klienta, wysyłki, zmiany, pomiary | `references/log-zdarzen.md` |
 
-**Proces jest tutaj, fakty są w projekcie.** Ścieżki, osoby, role, gałąź i strony zewnętrzne czytasz z `.claude/detailed.conf`; zakres, hierarchię dokumentów i zasady gita z `CLAUDE.md` repo. Ten skill nie zawiera nazw z żadnego projektu. Gdy `CLAUDE.md` repo albo zasady osoby prowadzącej sesję są ostrzejsze niż skill, stosuj je i zgłoś różnicę w raporcie kroku (pole „Do standardu”).
+**Proces jest tutaj, fakty są w projekcie.** Ścieżki, osoby, role, gałąź i strony zewnętrzne czytasz z `.claude/detailed.conf`; zakres, hierarchię dokumentów i zasady gita z `CLAUDE.md` repo. Ten skill nie zawiera nazw z żadnego projektu. Gdy `CLAUDE.md` repo mówi inaczej niż skill, obowiązuje `CLAUDE.md`. Zasady osoby prowadzącej sesję mogą skill tylko zaostrzyć. Każdą taką różnicę zgłoś w polu „Do standardu” raportu kroku.
+
+## Po wywołaniu
+
+| Sytuacja | Co robisz |
+|---|---|
+| `/detailed <zadanie>` | Pełna pętla kroku dla tego zadania. |
+| `/detailed` bez zadania | Punkty 1–3 pętli. Potem stan w kilku liniach: kto prowadzi sesję, sprawy czekające na tę osobę, sprawy blokujące, pliki niezapisane w gicie. |
+| W sesji są już zmiany, ustalenia albo pytania bez zapisu | Najpierw nadrabiasz: punkty 9–11 dla wszystkiego, co zaszło od początku sesji. |
+| Repo nie ma `.claude/detailed.conf` | `references/wdrozenie.md`: proponujesz założenie zapisu. Do czasu wdrożenia pętla i raport kroku obowiązują; w polach raportu wpisujesz, co powinno powstać. |
+
+Po wywołaniu każdy następny krok sesji idzie pętlą, bez ponownego wywołania.
 
 ## Pętla kroku
 
-Krok to jedna logiczna zmiana: zadanie, odpowiedź na pytanie, analiza materiału, przygotowanie treści.
+Krok to jedna logiczna zmiana: zadanie, analiza materiału, przygotowanie treści, rozstrzygnięcie.
 
 ### Przed krokiem
 
-1. **Konfiguracja.** Przeczytaj `.claude/detailed.conf`. Gdy go nie ma: `references/wdrozenie.md`.
+1. **Konfiguracja.** Przeczytaj `.claude/detailed.conf`.
 2. **Kto prowadzi sesję.** `git config user.email` i `user.name` porównaj z plikiem osób (`people`). Osoba nieznana: zapytaj raz. Od osoby zależy rola i to, co wolno zamknąć.
 3. **Aktualny stan.** Zaktualizuj klon według zasad repo. Przeczytaj w rejestrze (`register`) otwarte wiersze dotykające obszaru kroku i wymień je, po jednej linii: ID, czego dotyczy, założenie robocze.
 4. **Zakres.** Sprawdź, czy krok mieści się w zakresie (`references/bramka-i-zakres.md`). Poza zakresem: przerwij, wiersz w rejestrze, jedna linia zgłoszenia.
@@ -39,7 +50,7 @@ Krok to jedna logiczna zmiana: zadanie, odpowiedź na pytanie, analiza materiał
 
 9. **Zapis.** Znajdź zdarzenie w tabeli niżej i zaktualizuj wskazane miejsca w tej samej zmianie. Gdy `CLAUDE.md` repo ma własną tabelę „Zdarzenie → co aktualizować”, ona wskazuje pliki.
 10. **Git.** Zapisz zmianę według zasad repo i osoby prowadzącej (kto commituje, co idzie przez PR, kiedy pytać). Skill mówi, co ma trafić do zapisu, a nie kto wypycha.
-11. **Raport kroku** w tym kształcie, każde pole wypełnione:
+11. **Raport kroku.** Podajesz go, gdy krok zmienił plik, przyniósł ustalenie albo zostawił pytanie. Kształt stały, każde pole wypełnione:
 
 ```
 Krok: <co zrobione, jedno zdanie>
@@ -53,6 +64,10 @@ Niezapisane w gicie: <pliki> | nic
 Do standardu: <reguła w postaci ogólnej, bez nazw z projektu> | nic
 ```
 
+### Koniec sesji
+
+12. `git status`. Wiedzę niezapisaną w gicie zapisz według zasad repo albo wymień plik po pliku. Podaj sprawy, które blokują pracę, i sprawy czekające na osobę prowadzącą.
+
 ## Zdarzenie → zapis
 
 | Zdarzenie | Zapis dla nas | Log zdarzeń | Zapis dla klienta |
@@ -63,6 +78,7 @@ Do standardu: <reguła w postaci ogólnej, bez nazw z projektu> | nic
 | Decyzja człowieka | status i źródło w rejestrze; dokumenty, których dotyczy | `decyzja` | gdy klient ma ją poznać: plik do wysłania |
 | Odpowiedź albo materiał od klienta | wiersz rejestru; dokument, którego dotyczy | `odpowiedź klienta` | — |
 | Wysłano coś klientowi | kopia w archiwum wysłanych (`client_sent`); wiersze rejestru | `wysłano` | plik przeniesiony ze skrzynki do archiwum |
+| Analiza, research albo wniosek z materiału | dokument wiedzy (najpierw istniejący), ze źródłem i oznaczeniem faktów | — | — |
 | Scalona zmiana w kodzie albo w projekcie | dokumenty, których dotyczy | `zmiana` | — |
 | Test albo pomiar | dokument wyników; fakty oznaczone `zmierzone` | `pomiar` | — |
 | Wymaganie spoza zakresu | wiersz „Czeka na” osobę decyzyjną, z kolumną „Zakres” | `zakres` po decyzji | po decyzji |
@@ -70,6 +86,29 @@ Do standardu: <reguła w postaci ogólnej, bez nazw z projektu> | nic
 | Sprzeczność między dokumentami | wiersz w rejestrze, bez cichego wyboru | — | — |
 | Nowy plik wiedzy | wpis w mapie wiedzy (`knowledge_map`) | — | — |
 | Błąd w zapisie albo w wysłanej treści | dopisek z datą, bez przepisywania historii | `korekta` | sprostowanie w pliku do wysłania |
+
+## Przykład kroku
+
+Zadanie: „dodaj import produktów z arkusza”. W rejestrze jest otwarty wiersz P-04 (eksport do arkusza poza pierwszym etapem).
+
+```
+Przed krokiem
+P-04 · eksport do arkusza poza zakresem · założenie robocze: nie budujemy. Import jest w zakresie (podstawa).
+
+W trakcie
+Dostawca nie dokumentuje limitu wierszy. Nowy wiersz T-03 „limit wierszy importu”, Czeka na: Jan,
+założenie robocze: partie po 100. W kodzie: // T-03: batch of 100 until measured
+
+Krok: import produktów z arkusza z walidacją nagłówków, PR #12 otwarty
+Zapis dla nas: docs/architektura.md, sekcja „Import”
+Zapis dla klienta: brak
+Log zdarzeń: brak (wpis `zmiana` po scaleniu PR #12)
+Rejestr: T-03 otwarte
+Czeka na Ciebie: T-03 · jaki limit wierszy przyjąć na stałe? Rekomendacja: zmierzyć na środowisku testowym
+Blokuje: nic
+Niezapisane w gicie: nic
+Do standardu: nic
+```
 
 ## Czerwone linie
 
@@ -82,6 +121,8 @@ Do standardu: <reguła w postaci ogólnej, bez nazw z projektu> | nic
 
 ## Co czytać i kiedy
 
+Ścieżki są względne wobec katalogu tego skilla.
+
 | Plik | Kiedy |
 |---|---|
 | `references/zapis-dla-nas.md` | dopisujesz wiersz do rejestru, piszesz albo zmieniasz dokument wiedzy |
@@ -91,11 +132,11 @@ Do standardu: <reguła w postaci ogólnej, bez nazw z projektu> | nic
 | `references/cykl-realizacji.md` | planujesz etap, piszesz kartę zadania, opis PR albo recenzję, odbierasz etap |
 | `references/wdrozenie.md` | repo nie ma konfiguracji albo zakładasz zapis w nowym projekcie |
 | `templates/` | zakładasz rejestr, log, plik do wysłania, konfigurację, plik osób albo hook |
-| `scripts/reminders.sh` | hook przypomnień; ręcznie: `bash scripts/reminders.sh start` w katalogu projektu |
+| `scripts/reminders.sh` | hook przypomnień; ręcznie w katalogu projektu: `bash <katalog skilla>/scripts/reminders.sh start` |
 
 ## Przypomnienia
 
-Gdy repo ma hook przypomnień, jego punkty podaj w 1–3 liniach na początku odpowiedzi (ID i czego dotyczy), potem rób zadanie; nie powtarzaj ich przy każdej odpowiedzi. Gdy hooka nie ma, zrób to sam na starcie sesji: sprawy czekające na osobę prowadzącą, sprawy stron zewnętrznych otwarte dłużej niż `external_overdue_days`, sprawy osoby decyzyjnej zamknięte bez jej commita, nieaktualny klon. Na końcu dłuższej sesji: sprawy, które blokują pracę.
+Gdy repo ma hook przypomnień, jego punkty podaj w 1–3 liniach na początku odpowiedzi (ID i czego dotyczy), potem rób zadanie; nie powtarzaj ich przy każdej odpowiedzi. Gdy hooka nie ma, zrób to sam na starcie sesji: sprawy czekające na osobę prowadzącą, sprawy stron zewnętrznych otwarte dłużej niż `external_overdue_days`, sprawy osoby decyzyjnej zamknięte bez jej commita, nieaktualny klon.
 
 ## Rozwój standardu
 

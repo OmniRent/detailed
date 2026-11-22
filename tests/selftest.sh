@@ -18,6 +18,20 @@ WORDS="$(grep -v '^#' "$REPO/tests/project-words.txt" | grep -v '^$' | paste -sd
 hits="$(grep -rniwE "$WORDS" "$REPO/skills/detailed" || true)"
 if [ -z "$hits" ]; then ok "skill directory has no project words"; else fail "project words in the skill directory"; printf '%s\n' "$hits" | sed 's/^/       | /'; fi
 
+# --- 1b. Skill structure: name matches the directory, every referenced file exists --------------
+SKILL_DIR="$REPO/skills/detailed"
+name="$(awk -F': *' '/^name:/{print $2; exit}' "$SKILL_DIR/SKILL.md")"
+[ "$name" = "$(basename "$SKILL_DIR")" ] && ok "skill name matches its directory" || fail "skill name '$name' does not match the directory"
+missing=""
+for ref in $(grep -rhoE '`(references|templates|scripts)/[A-Za-z0-9._/-]+`' "$SKILL_DIR" | tr -d '`' | sort -u); do
+  [ -e "$SKILL_DIR/$ref" ] || missing="$missing $ref"
+done
+[ -z "$missing" ] && ok "every file referenced in the skill exists" || fail "referenced files missing:$missing"
+for key in $(grep -rhoE '`(register|people|gate_role|sender_role|client_outbox|client_sent|event_log|knowledge_map|knowledge_dirs|state|external_parties|external_overdue_days)`' "$SKILL_DIR" --include='*.md' | tr -d '`' | sort -u); do
+  grep -q "^$key=" "$SKILL_DIR/templates/detailed.conf" || missing="$missing $key"
+done
+[ -z "$missing" ] && ok "every config key named in the skill is in the config template" || fail "config keys missing from the template:$missing"
+
 # --- 2. Hook behaviour on a throwaway repo ------------------------------------------------------------
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT

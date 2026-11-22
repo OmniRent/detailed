@@ -14,6 +14,8 @@ Klient widzi tylko to, co wysłała osoba z rolą `sender_role`. Sesja przygotow
 
 ## 2. Plik do wysłania
 
+Nazwa według reguły nazw z `CLAUDE.md` repo; gdy jej nie ma: `RRRR-MM-DD-<temat>.md` w skrzynce nadawczej. Jeden plik to jedna wiadomość.
+
 Plik ma dwie części rozdzielone linią `---`.
 
 **Nad linią (dla nas):** do kogo, kto wysyła, których ID z rejestru dotyczy, na jakiej podstawie powstał.

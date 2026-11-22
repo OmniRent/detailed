@@ -2,6 +2,8 @@
 
 Zakładanie zapisu w projekcie zmienia zasady pracy zespołu, więc jest sprawą osoby decyzyjnej: zaproponuj poniższe kroki i poczekaj na zgodę. Nie zakładaj plików bez niej.
 
+W projekcie bez pliku osób zapytaj osobę prowadzącą sesję, kto pełni rolę decyzyjną i kto wysyła treści klientowi; od tych odpowiedzi zaczyna się plik osób. Do czasu wdrożenia nic nie ginie: stosujesz pętlę kroku, a w raporcie kroku wpisujesz, jaki wiersz, wpis albo plik powinien powstać.
+
 ## 1. Nowy projekt
 
 | # | Co | Z czego | Gdzie w repo projektu |
@@ -14,6 +16,20 @@ Zakładanie zapisu w projekcie zmienia zasady pracy zespołu, więc jest sprawą
 | 6 | Kopia skilla | katalog `skills/detailed/` z repozytorium standardu | `.claude/skills/detailed/` |
 | 7 | Hook przypomnień | `templates/settings-hooks.json` | `.claude/settings.json` |
 | 8 | Fakty w `CLAUDE.md` | lista w sekcji 3 | `CLAUDE.md` |
+
+Po zgodzie, w katalogu projektu (`SKILL` to katalog tego skilla; ścieżki docelowe dopasuj do kluczy konfiguracji):
+
+```bash
+mkdir -p .claude/skills docs/do-wyslania docs/wyslane
+cp -R "$SKILL" .claude/skills/detailed
+cp "$SKILL/templates/detailed.conf" .claude/detailed.conf
+cp "$SKILL/templates/osoby.tsv" .claude/osoby.tsv
+cp "$SKILL/templates/rejestr.md" docs/rejestr.md
+cp "$SKILL/templates/log-zdarzen.md" docs/log-zdarzen.md
+cp "$SKILL/templates/settings-hooks.json" .claude/settings.json   # gdy plik już istnieje: dopisz sekcję "hooks" ręcznie
+```
+
+Potem uzupełnij wartości w `.claude/detailed.conf` i `.claude/osoby.tsv`, dopisz fakty do `CLAUDE.md` (sekcja 3) i pierwszy wpis `decyzja` w logu: kto i kiedy przyjął standard.
 
 Sprawdzenie: `bash .claude/skills/detailed/scripts/reminders.sh start` w katalogu projektu wypisuje sprawy czekające na osobę z `git config` albo pyta, kto prowadzi sesję.
 
