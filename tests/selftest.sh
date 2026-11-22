@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Self-check for the "detailed" skill: run with `bash tests/selftest.sh` from the repo root.
-#   1. The skill directory contains no project-specific words (the process must stay generic).
+#   1. Skill structure, config keys and no hard-coded limits.
 #   2. The reminder hook reads everything from the config and reports the right rows.
 set -u
 
@@ -11,12 +11,6 @@ ok()   { echo "ok   - $1"; }
 fail() { echo "FAIL - $1"; FAILED=1; }
 has()  { case "$2" in *"$1"*) ok "$3" ;; *) fail "$3 (missing: $1)"; printf '%s\n' "$2" | sed 's/^/       | /' ;; esac; }
 lacks() { case "$2" in *"$1"*) fail "$3 (unexpected: $1)" ;; *) ok "$3" ;; esac; }
-
-# --- 1. Generic check ---------------------------------------------------------------------------
-# Words that belong to a project, never to the standard. Extend the list in tests/project-words.txt.
-WORDS="$(grep -v '^#' "$REPO/tests/project-words.txt" | grep -v '^$' | paste -sd'|' -)"
-hits="$(grep -rniwE "$WORDS" "$REPO/skills/detailed" || true)"
-if [ -z "$hits" ]; then ok "skill directory has no project words"; else fail "project words in the skill directory"; printf '%s\n' "$hits" | sed 's/^/       | /'; fi
 
 # --- 1b. Skill structure: name matches the directory, every referenced file exists --------------
 SKILL_DIR="$REPO/skills/detailed"

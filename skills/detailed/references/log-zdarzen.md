@@ -55,7 +55,7 @@ Rejestr: <ID i nowy status> | bez zmian
 
 | Data | Typ | ID | Co się stało i co od teraz obowiązuje | Kto | Źródło |
 |---|---|---|---|---|---|
-| 2030-03-14 | `korekta` | K-07 | Wpis z 2030-03-12 podawał termin 20.03; poprawny termin z wiadomości klienta to 27.03 | Anna | wiadomość klienta z 2030-03-12 |
-| 2030-03-13 | `wysłano` | K-07, K-09 | Lista pytań o dostęp do środowiska testowego wysłana klientowi; czekamy na odpowiedź | Anna | `wyslane/2030-03-13-pytania-dostep/` |
-| 2030-03-12 | `decyzja` | P-04 | Eksport do arkusza poza pierwszym etapem; architektura ma go umożliwić, nie budujemy | Anna | commit `ab12cd3` |
-| 2030-03-11 | `pomiar` | T-02 | Import 5 tys. rekordów trwa 4 min przy limicie 60 zapytań na minutę; partia 100 rekordów | Jan | `wyniki-testow-importu-2030-03-11.md` |
+| 2030-03-14 | `korekta` | K-07 | Wpis z 2030-03-12 podawał termin 20.03; poprawny termin z wiadomości klienta to 27.03 | PM | wiadomość klienta z 2030-03-12 |
+| 2030-03-13 | `wysłano` | K-07, K-09 | Lista pytań o dostęp do środowiska testowego wysłana klientowi; czekamy na odpowiedź | PM | `wyslane/2030-03-13-pytania-dostep/` |
+| 2030-03-12 | `decyzja` | P-04 | Eksport do arkusza poza pierwszym etapem; architektura ma go umożliwić, nie budujemy | PM | commit `ab12cd3` |
+| 2030-03-11 | `pomiar` | T-02 | Import 5 tys. rekordów trwa 4 min przy limicie 60 zapytań na minutę; partia 100 rekordów | Deweloper | `wyniki-testow-importu-2030-03-11.md` |

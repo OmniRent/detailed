@@ -20,7 +20,6 @@ Proces jest w skillu. Fakty projektu (ścieżki, osoby, role, gałąź, klient) 
 | `skills/detailed/templates/` | Konfiguracja projektu, plik osób, rejestr, log zdarzeń, plik do wysłania, podpięcie hooka |
 | `skills/detailed/scripts/reminders.sh` | Hook przypomnień z rejestru; wszystko czyta z konfiguracji projektu |
 | `tests/selftest.sh` | Sprawdzenie hooka na repozytorium tymczasowym i brak słów z projektów w skillu |
-| `tests/project-words.txt` | Słowa, które nie mogą pojawić się w skillu; dopisz nazwy z każdego nowego projektu |
 | `rejestr.md` | Otwarte sprawy samego standardu |
 | `log-zdarzen.md` | Co i kiedy zmieniło się w standardzie |
 

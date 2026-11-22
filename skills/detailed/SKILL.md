@@ -96,7 +96,7 @@ Przed krokiem
 P-04 · eksport do arkusza poza zakresem · założenie robocze: nie budujemy. Import jest w zakresie (podstawa).
 
 W trakcie
-Dostawca nie dokumentuje limitu wierszy. Nowy wiersz T-03 „limit wierszy importu”, Czeka na: Jan,
+Dostawca nie dokumentuje limitu wierszy. Nowy wiersz T-03 „limit wierszy importu”, Czeka na: Deweloper,
 założenie robocze: partie po 100. W kodzie: // T-03: batch of 100 until measured
 
 Krok: import produktów z arkusza z walidacją nagłówków, PR #12 otwarty

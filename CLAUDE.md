@@ -34,7 +34,7 @@ Przy każdej takiej uwadze:
 
 ## Granice
 
-- W `skills/detailed/` nie ma nazw klientów, systemów, osób ani ścieżek z żadnego projektu. Nazwy z nowego projektu dopisz do `tests/project-words.txt`.
+- W `skills/detailed/` nie ma nazw klientów, systemów, osób ani ścieżek z żadnego projektu. Nazwy w skillu są ogólne (role, „klient”, „system zewnętrzny”, klucze konfiguracji); przy każdej zmianie sprawdzasz to, czytając zmieniony tekst, a nie listą słów, bo lista sama trzymałaby nazwy projektów w tym repo.
 - W całym repo nie ma nazw klientów, kwot ani treści z repozytoriów projektów. Przykłady są zmyślone i neutralne.
 - Kopii skilla w repozytoriach projektów nie poprawia się na miejscu; zmiana powstaje tutaj i jest stamtąd kopiowana.
 - Fakt jednego projektu (ścieżka, osoba, limit, model przypisany do roli) należy do `CLAUDE.md` i konfiguracji tamtego projektu, nie do skilla.

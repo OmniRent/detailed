@@ -1,3 +1,3 @@
 osoba	rola	email	wzorzec_nazwy
-Anna	pm	anna@example.com	anna
-Jan	dev	jan@example.com,jan.prywatny@example.com	jan|janek
+PM	pm	pm@example.com	pm
+Deweloper	dev	dev@example.com,dev.alt@example.com	dev
