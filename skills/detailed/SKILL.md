@@ -5,7 +5,7 @@ description: Używaj, gdy pracujesz w repozytorium projektu dla klienta, które 
 
 # detailed: dokładny zapis każdego kroku pracy projektowej
 
-Wersja 0.1.0, alfa (22.11.2026).
+Wersja 0.2.0, alfa (22.11.2026).
 
 **Zasada.** Nic, co ustalono, zmieniono albo wysłano, nie zostaje tylko w czacie. Każdy krok zostawia ślad w trzech rodzajach zapisu:
 
@@ -33,12 +33,13 @@ Krok to jedna logiczna zmiana: zadanie, odpowiedź na pytanie, analiza materiał
 5. **Kwestia nierozstrzygnięta.** Nie rozstrzygaj jej. Dopisz wiersz w rejestrze („Czeka na”, „Od”, „Zakres”, założenie robocze), buduj na założeniu i oznacz je komentarzem z ID w kodzie albo w dokumencie.
 6. **Fakt.** Oznacz, skąd pochodzi: `zmierzone`, `z dokumentacji`, `założenie`.
 7. **Treść dla klienta.** Przygotuj plik w skrzynce nadawczej (`client_outbox`). Nie wysyłaj.
+8. **Pytanie do osoby.** Pytanie, na którego odpowiedź sesja czeka, dopisz w tej samej zmianie jako wiersz rejestru („Czeka na” ta osoba) z rekomendacją w kolumnie „Założenie robocze” i podaj jego ID przy pytaniu. Odpowiedź, która przyjdzie w sesji, najpierw zapisz w wierszu (status i źródło), potem wykonaj.
 
 ### Po kroku
 
-8. **Zapis.** Znajdź zdarzenie w tabeli niżej i zaktualizuj wskazane miejsca w tej samej zmianie. Gdy `CLAUDE.md` repo ma własną tabelę „Zdarzenie → co aktualizować”, ona wskazuje pliki.
-9. **Git.** Zapisz zmianę według zasad repo i osoby prowadzącej (kto commituje, co idzie przez PR, kiedy pytać). Skill mówi, co ma trafić do zapisu, a nie kto wypycha.
-10. **Raport kroku** w tym kształcie, każde pole wypełnione:
+9. **Zapis.** Znajdź zdarzenie w tabeli niżej i zaktualizuj wskazane miejsca w tej samej zmianie. Gdy `CLAUDE.md` repo ma własną tabelę „Zdarzenie → co aktualizować”, ona wskazuje pliki.
+10. **Git.** Zapisz zmianę według zasad repo i osoby prowadzącej (kto commituje, co idzie przez PR, kiedy pytać). Skill mówi, co ma trafić do zapisu, a nie kto wypycha.
+11. **Raport kroku** w tym kształcie, każde pole wypełnione:
 
 ```
 Krok: <co zrobione, jedno zdanie>
@@ -46,6 +47,7 @@ Zapis dla nas: <pliki i sekcje> | brak (dlaczego)
 Zapis dla klienta: <plik w skrzynce nadawczej> | brak
 Log zdarzeń: <typ i ID każdego wpisu> | brak
 Rejestr: <nowe i zmienione ID ze statusem> | bez zmian
+Czeka na Ciebie: <ID i pytanie w jednym zdaniu, z rekomendacją> | nic
 Blokuje: <ID otwartych spraw, które blokują dalszą pracę> | nic
 Niezapisane w gicie: <pliki> | nic
 Do standardu: <reguła w postaci ogólnej, bez nazw z projektu> | nic
@@ -56,6 +58,7 @@ Do standardu: <reguła w postaci ogólnej, bez nazw z projektu> | nic
 | Zdarzenie | Zapis dla nas | Log zdarzeń | Zapis dla klienta |
 |---|---|---|---|
 | Nowe pytanie albo sprawa | nowy wiersz w rejestrze | — | pytanie do klienta: pozycja w pliku do wysłania |
+| Pytanie do osoby, na które sesja czeka | wiersz w rejestrze z rekomendacją; ID podane przy pytaniu | — | — |
 | Odpowiedź osoby z zespołu na pytanie z rejestru | odpowiedź i źródło w wierszu; status według bramki; komentarze z ID w kodzie zastąpione rozstrzygnięciem | `decyzja`, gdy odpowiedź zamyka sprawę | — |
 | Decyzja człowieka | status i źródło w rejestrze; dokumenty, których dotyczy | `decyzja` | gdy klient ma ją poznać: plik do wysłania |
 | Odpowiedź albo materiał od klienta | wiersz rejestru; dokument, którego dotyczy | `odpowiedź klienta` | — |

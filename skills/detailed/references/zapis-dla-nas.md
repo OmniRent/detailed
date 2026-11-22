@@ -26,6 +26,7 @@ Zasady wierszy:
 3. Sprawę osoby decyzyjnej zamyka tylko jej commit (`references/bramka-i-zakres.md`). W innej sesji wpisujesz `propozycja` z uzasadnieniem.
 4. Założenie robocze oznacz w kodzie albo w dokumencie komentarzem z ID sprawy, żeby po decyzji dało się znaleźć wszystkie miejsca.
 5. Pytanie do klienta jest wierszem „Czeka na” klienta i pozycją w pliku do wysłania (`references/zapis-dla-klienta.md`). Kolumna „Następny krok” wskazuje ten plik.
+6. Pytanie zadane osobie w sesji, na które sesja czeka, jest wierszem „Czeka na” tę osobę, z rekomendacją w „Założenie robocze”. Pytanie zostawione tylko w czacie ginie między sesjami i nie trafia do przypomnień. Odpowiedź z sesji zapisujesz w wierszu, zanim ją wykonasz: status, a w „Źródło potwierdzenia” data i „odpowiedź w sesji”.
 
 ## 2. Dokumenty wiedzy (`knowledge_dirs`)
 
