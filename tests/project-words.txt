@@ -1,0 +1,8 @@
+# Words that must never appear in skills/detailed/ (matched as whole words, case-insensitive).
+# Add the client, system and people names of every project that adopts the standard.
+downtown
+guesty
+omnirent
+maciej
+olek
+docs/19
